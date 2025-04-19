@@ -1,9 +1,10 @@
 ﻿using HarmonyLib;
 using MelonLoader;
+using System;
 using System.Reflection;
 using UnityEngine;
 
-[assembly: MelonInfo(typeof(StoragePlus.Core), "StoragePlus", "1.0.3", "Denveous", null)] 
+[assembly: MelonInfo(typeof(StoragePlus.Core), "StoragePlus", "1.0.2", "Denveous", null)] 
 [assembly: MelonGame("TVGS", "Schedule I")]
 [assembly: MelonColor(255, 255, 0, 255)]
 [assembly: MelonAuthorColor(255, 0, 255, 0)]
@@ -22,6 +23,10 @@ namespace StoragePlus {
         public int WallShelfSlots = 6;
         public int VanRows = 4;
         public int VanSlots = 20;
+        public int WoodSquareTableRows = 2;
+        public int WoodSquareTableSlots = 6;
+        public int MetalSquareTableRows = 2;
+        public int MetalSquareTableSlots = 6;
     }
     
     public class Core : MelonMod {
@@ -47,6 +52,10 @@ namespace StoragePlus {
             category.CreateEntry<int>("WallShelfRows", config.WallShelfRows, "Wall Shelf Rows", "Valid number must be between 1 to 20", false, false, null, null);
             category.CreateEntry<int>("VanSlots", config.VanSlots, "Van Slots", "Valid number must be between 1 to 20", false, false, null, null);
             category.CreateEntry<int>("VanRows", config.VanRows, "Van Rows", "Valid number must be between 1 to 20", false, false, null, null);
+            category.CreateEntry<int>("WoodSquareTableSlots", config.WoodSquareTableSlots, "Wood Square Table Slots", "Valid number must be between 1 to 20", false, false, null, null);
+            category.CreateEntry<int>("WoodSquareTableRows", config.WoodSquareTableRows, "Wood Square Table Rows", "Valid number must be between 1 to 20", false, false, null, null);
+            category.CreateEntry<int>("MetalSquareTableSlots", config.MetalSquareTableSlots, "Metal Square Table Slots", "Valid number must be between 1 to 20", false, false, null, null);
+            category.CreateEntry<int>("MetalSquareTableRows", config.MetalSquareTableRows, "Metal Square Table Rows", "Valid number must be between 1 to 20", false, false, null, null);
             LoadConfig();
         }
         
@@ -90,6 +99,10 @@ namespace StoragePlus {
             config.WallShelfRows = Mathf.Min(MelonPreferences.GetEntryValue<int>("StoragePlus", "WallShelfRows"), GAME_MAX_SLOTS);
             config.VanSlots = Mathf.Min(MelonPreferences.GetEntryValue<int>("StoragePlus", "VanSlots"), GAME_MAX_SLOTS);
             config.VanRows = Mathf.Min(MelonPreferences.GetEntryValue<int>("StoragePlus", "VanRows"), GAME_MAX_SLOTS);
+            config.WoodSquareTableSlots = Mathf.Min(MelonPreferences.GetEntryValue<int>("StoragePlus", "WoodSquareTableSlots"), GAME_MAX_SLOTS);
+            config.WoodSquareTableRows = Mathf.Min(MelonPreferences.GetEntryValue<int>("StoragePlus", "WoodSquareTableRows"), GAME_MAX_SLOTS);
+            config.MetalSquareTableSlots = Mathf.Min(MelonPreferences.GetEntryValue<int>("StoragePlus", "MetalSquareTableSlots"), GAME_MAX_SLOTS);
+            config.MetalSquareTableRows = Mathf.Min(MelonPreferences.GetEntryValue<int>("StoragePlus", "MetalSquareTableRows"), GAME_MAX_SLOTS);
         }
         
         public override void OnPreferencesSaved() {
@@ -105,6 +118,10 @@ namespace StoragePlus {
             int newWallShelfRows = MelonPreferences.GetEntryValue<int>("StoragePlus", "WallShelfRows");
             int newVanSlots = MelonPreferences.GetEntryValue<int>("StoragePlus", "VanSlots");
             int newVanRows = MelonPreferences.GetEntryValue<int>("StoragePlus", "VanRows");
+            int newWoodSquareTableSlots = MelonPreferences.GetEntryValue<int>("StoragePlus", "WoodSquareTableSlots");
+            int newWoodSquareTableRows = MelonPreferences.GetEntryValue<int>("StoragePlus", "WoodSquareTableRows");
+            int newMetalSquareTableSlots = MelonPreferences.GetEntryValue<int>("StoragePlus", "MetalSquareTableSlots");
+            int newMetalSquareTableRows = MelonPreferences.GetEntryValue<int>("StoragePlus", "MetalSquareTableRows");
             
             if (newSafeSlots != config.SafeSlots) { if (newSafeSlots < 1 || newSafeSlots > GAME_MAX_SLOTS) return; config.SafeSlots = newSafeSlots; }
             if (newSafeRows != config.SafeRows) { if (newSafeRows < 1 || newSafeRows > GAME_MAX_SLOTS) return; config.SafeRows = newSafeRows; }
@@ -118,6 +135,12 @@ namespace StoragePlus {
             if (newWallShelfRows != config.WallShelfRows) { if (newWallShelfRows < 1 || newWallShelfRows > GAME_MAX_SLOTS) return; config.WallShelfRows = newWallShelfRows; }
             if (newVanSlots != config.VanSlots) { if (newVanSlots < 1 || newVanSlots > GAME_MAX_SLOTS) return; config.VanSlots = newVanSlots; }
             if (newVanRows != config.VanRows) { if (newVanRows < 1 || newVanRows > GAME_MAX_SLOTS) return; config.VanRows = newVanRows; }
+            if (newWoodSquareTableSlots != config.WoodSquareTableSlots) { if (newWoodSquareTableSlots < 1 || newWoodSquareTableSlots > GAME_MAX_SLOTS) return; config.WoodSquareTableSlots = newWoodSquareTableSlots; }
+            if (newWoodSquareTableRows != config.WoodSquareTableRows) { if (newWoodSquareTableRows < 1 || newWoodSquareTableRows > GAME_MAX_SLOTS) return; config.WoodSquareTableRows = newWoodSquareTableRows; }
+            if (newMetalSquareTableSlots != config.MetalSquareTableSlots) { if (newMetalSquareTableSlots < 1 || newMetalSquareTableSlots > GAME_MAX_SLOTS) return; config.MetalSquareTableSlots = newMetalSquareTableSlots; }
+            if (newMetalSquareTableRows != config.MetalSquareTableRows) { if (newMetalSquareTableRows < 1 || newMetalSquareTableRows > GAME_MAX_SLOTS) return; config.MetalSquareTableRows = newMetalSquareTableRows; }
+            
+            MelonPreferences.Save();
         }
         
         private static bool PatchStorageEntity(object __instance) {
@@ -137,6 +160,8 @@ namespace StoragePlus {
                 else if (lowerName.Contains("safe_built")) { slotCount = config.SafeSlots; displayRowCount = config.SafeRows; }
                 else if (lowerName.Contains("wallmountedshelf_built")) { slotCount = config.WallShelfSlots; displayRowCount = config.WallShelfRows; }
                 else if (lowerName.Contains("van")) { slotCount = config.VanSlots; displayRowCount = config.VanRows; }
+                else if (lowerName.Contains("woodsquaretable")) { slotCount = config.WoodSquareTableSlots; displayRowCount = config.WoodSquareTableRows; }
+                else if (lowerName.Contains("metalsquaretable")) { slotCount = config.MetalSquareTableSlots; displayRowCount = config.MetalSquareTableRows; }
                 else return true;
                 
                 slotCount = Mathf.Min(slotCount, GAME_MAX_SLOTS);
