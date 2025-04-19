@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.13.35919.96
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IncreasedStorageRedux", "IncreasedStorageRedux.csproj", "{2E0DD94F-342E-4CB7-B34F-F3B3408140F0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StoragePlus", "StoragePlus.csproj", "{2E0DD94F-342E-4CB7-B34F-F3B3408140F0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
